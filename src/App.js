@@ -1,11 +1,41 @@
+import { useEffect, useState } from 'react';
 import './App.css';
-import Message from './components/Message/Message.jsx';
+import { Chat } from './components/Chat/Chat';
+import { MessageForm } from './components/MessageForm/MessageForm';
+
+export const robotName = 'Robot';
+const userName = 'You';
 
 function App() {
+  const [messageList, setMessageList] = useState([]);
+
+  useEffect(() => {
+    if (
+      messageList[messageList.length - 1]
+      && messageList[messageList.length - 1].author !== robotName
+    ) {
+      setTimeout(() => {
+        setMessageList([...messageList, {
+          author: robotName,
+          message: 'Robot answerd',
+        }]);
+      }, 1500);
+    }
+  }, [messageList]);
+
+  const saveMessage = (message) => {
+    setMessageList([...messageList, {
+      author: userName,
+      message,
+    }]);
+  };
+
   return (
     <div className="App">
-      <Message message="Сообщение 1" />
-      <Message message="Другое" />
+      <div className="wrapper">
+        <Chat messages={messageList} />
+        <MessageForm saveMessage={saveMessage} />
+      </div>
     </div>
   );
 }

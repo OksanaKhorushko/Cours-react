@@ -1,0 +1,19 @@
+.message-form {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+
+.message-form-row {
+  display: flex;
+}
+
+.message-form textarea {
+  width: 80%;
+  height: 20%;
+}
+
+.message-form button {
+  width: 20%;
+  margin-left: 5px;
+}
