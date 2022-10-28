@@ -1,21 +1,17 @@
+import { Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { robotName } from '../../App';
-import './Chat.css';
+import { ChatMessage } from './ChatMessage';
 
 export const Chat = (props) => {
   return (
-    <div className="chat">
-      <div className="container">
-        <h2>Chat</h2>
-        <ul className="chat-list">
-          {props.messages.map((message, i) => {
-            return <li key={`message-${i}`} className={message.author === robotName ? 'left' : 'right'}>
-              <span>{message.author}</span>
-              <p>{message.message}</p>
-            </li>
-          })}
-        </ul>
-      </div>
-    </div>
-  );
+    <>
+      <Typography variant="h2" pb={2}>Chat</Typography>
+      <Divider />
+      <List sx={{overflow: 'auto'}}>
+        {props.messages.map((message, i) => {
+          return <ChatMessage key={`message-${i}`} message={message}/>
+        })}
+      </List>
+    </>
+  )
 }

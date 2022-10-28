@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import './MessageForm.css';
-
+import { Button, Grid, TextField } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const MessageForm = (props) => {
   const [message, setMessage] = useState('');
+
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const onMessageChange = (event) => {
     setMessage(event.target.value);
@@ -12,16 +17,26 @@ export const MessageForm = (props) => {
   const onSendClick = () => {
     props.saveMessage(message);
     setMessage('');
+    inputRef.current?.focus();
   }
 
   return (
-    <div className="message-form">
-      <div className="container">
-        <div className="message-form-row">
-          <textarea onChange={onMessageChange} value={message} placeholder="Add message form..."></textarea>
-          <button disabled={!message} onClick={onSendClick}>Send</button>
-        </div>
-      </div>
-    </div>
+    <Grid container spacing={2} mt="auto">
+      <Grid item xs={8}>
+        <TextField
+          id="outlined-multiline-flexible"
+          label="Message"
+          multiline
+          maxRows={4}
+          value={message}
+          onChange={onMessageChange}
+          inputRef={inputRef}
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={4} alignSelf="flex-end">
+        <Button variant="contained" disabled={!message} onClick={onSendClick} fullWidth>Send</Button>
+      </Grid>
+    </Grid>
   )
 }
